@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhtc7xemrghcn"]
+
+[ext_resource type="Script" path="res://Scripts/Global/GlobalView.cs" id="2_jl2fa"]
+[ext_resource type="Script" path="res://Scripts/Global/GlobalPresenter.cs" id="3_glh5n"]
+[ext_resource type="PackedScene" uid="uid://bpk4q3qui8i41" path="res://Scenes/GlobalUI.tscn" id="3_qt0oo"]
+
+[node name="MainMenuScene" type="CanvasLayer" node_paths=PackedStringArray("GlobalView")]
+script = ExtResource("3_glh5n")
+GlobalView = NodePath("GlobalView")
+
+[node name="GlobalView" type="Node" parent="." node_paths=PackedStringArray("GlobalUIViewNode")]
+script = ExtResource("2_jl2fa")
+GlobalUIViewNode = NodePath("../GlobalUI")
+
+[node name="GlobalUI" parent="." instance=ExtResource("3_qt0oo")]

@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7hygnxxokgpb"]
+
+[ext_resource type="Script" path="res://Scripts/Game/GamePresenter.cs" id="1_tfwj3"]
+[ext_resource type="Script" path="res://Scripts/Game/GameView.cs" id="2_jix7q"]
+[ext_resource type="PackedScene" uid="uid://b7q2camm12kqw" path="res://Scenes/Ship/Ship.tscn" id="3_h3gu0"]
+[ext_resource type="Script" path="res://Scripts/Game/Input/InputView.cs" id="3_o8mjq"]
+
+[node name="GameScene" type="Node2D" node_paths=PackedStringArray("GameView")]
+script = ExtResource("1_tfwj3")
+GameView = NodePath("GameView")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="GameView" type="Node" parent="." node_paths=PackedStringArray("InputViewNode")]
+script = ExtResource("2_jix7q")
+InputViewNode = NodePath("../InputView")
+
+[node name="InputView" type="Node" parent="."]
+script = ExtResource("3_o8mjq")
+
+[node name="Ship" parent="." instance=ExtResource("3_h3gu0")]
