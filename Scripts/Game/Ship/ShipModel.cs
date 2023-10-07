@@ -1,11 +1,11 @@
-﻿using System;
-using Asteroids.Scripts.Game.Ship.Base;
+﻿using Asteroids.Scripts.Game.Ship.Base;
+using Asteroids.Scripts.Game.Ship.Move.Base;
+using Asteroids.Scripts.Game.Ship.Shoot.Base;
 
 namespace Asteroids.Scripts.Game.Ship;
 
 public class ShipModel : IShipModel
 {
-    public event Action<double> OnUpdate;
-    
-    public void Update(double deltaTime) => OnUpdate?.Invoke(deltaTime);
+    public IShipShootModel ShootModel { get; set; }
+    public IShipMoveModel MoveModel { get; set; }
 }

@@ -1,5 +1,9 @@
 ﻿using Asteroids.Scripts.Game.Base;
 using Asteroids.Scripts.Game.Ship.Base;
+using Asteroids.Scripts.Game.Ship.Move;
+using Asteroids.Scripts.Game.Ship.Shoot;
+using Asteroids.Scripts.Utilities;
+using Asteroids.Scripts.Utilities.Enums;
 using Asteroids.Scripts.Utilities.Interfaces;
 
 namespace Asteroids.Scripts.Game.Ship;
@@ -10,6 +14,8 @@ public class ShipPresenter : IPresenter
     private readonly IShipModel _model;
     private readonly IShipView _view;
 
+    private readonly PresentersEngine _presenters = new();
+    
     public ShipPresenter(IGameEnvironment environment, IShipModel model, IShipView view)
     {
         _environment = environment;
@@ -17,31 +23,30 @@ public class ShipPresenter : IPresenter
         _view = view;
     }
     
-    public void Activate() => _model.OnUpdate += Update;
+    public void Activate() => CreateNecessaryData();
 
-    public void Deactivate() => _model.OnUpdate += Update;
+    public void Deactivate() => DisposeData();
 
-    private void Update(double delta)
+    private void DisposeData()
     {
-        Move();
-        Rotate();
+        _environment.FixedUpdatersEngine.Remove(UpdatersTypes.ShipMove);
+        _environment.FixedUpdatersEngine.Remove(UpdatersTypes.ShipShoot);
+        
+        _presenters.Deactivate();
+        _presenters.Clear();
     }
 
-    private void Rotate()
+    private void CreateNecessaryData()
     {
-        var turnDirection = _environment.InputModel.MoveDirection.X;
+        _model.ShootModel = new ShipShootModel();
+        _model.MoveModel = new ShipMoveModel();
         
-        if (turnDirection == 0f) return;
-
-        _view.Rotate(turnDirection);
-    }
-
-    private void Move()
-    {
-        var moveDirection = _environment.InputModel.MoveDirection;
+        _presenters.Add(new ShipShootPresenter(_environment, _model.ShootModel, _view));
+        _presenters.Add(new ShipMovePresenter(_environment, _model.MoveModel, _view));
         
-        if (moveDirection.Y == 0f) return;
+        _environment.FixedUpdatersEngine.Add(UpdatersTypes.ShipMove, new ShipMoveUpdater());
+        _environment.FixedUpdatersEngine.Add(UpdatersTypes.ShipShoot, new ShipShootUpdater());
         
-        _view.Move(moveDirection);
+        _presenters.Activate();
     }
 }

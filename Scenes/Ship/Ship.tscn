@@ -4,20 +4,23 @@
 [ext_resource type="Script" path="res://Scripts/Game/Ship/ShipView.cs" id="2_38qt5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_atqgk"]
-size = Vector2(79, 102)
+size = Vector2(326, 392)
 
-[node name="Ship" type="RigidBody2D"]
+[node name="Ship" type="RigidBody2D" node_paths=PackedStringArray("BulletSpawnPoint")]
 gravity_scale = 0.0
 can_sleep = false
 linear_damp = 1.0
 angular_damp = 1.0
 script = ExtResource("2_38qt5")
-ThrustSpeed = 3.0
-TurnSpeed = 150.0
+ThrustSpeed = 750.0
+TurnSpeed = 1500.0
+BulletSpawnPoint = NodePath("BulletSpawnPoint")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_s26je")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_atqgk")
+
+[node name="BulletSpawnPoint" type="Node2D" parent="."]
+position = Vector2(0, -372)

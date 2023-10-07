@@ -10,6 +10,7 @@ script = ExtResource("1_tfwj3")
 GameView = NodePath("GameView")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.2, 0.2)
 
 [node name="GameView" type="Node" parent="." node_paths=PackedStringArray("InputViewNode")]
 script = ExtResource("2_jix7q")

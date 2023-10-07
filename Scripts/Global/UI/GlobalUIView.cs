@@ -13,7 +13,6 @@ public partial class GlobalUIView : Node, IGlobalUIView
     
     public void InitializeButtonsSubscriptions()
     {
-        GD.Print("test");
         PlayButton.Pressed += StartGame;
         ExitButton.Pressed += CloseGame;
     }

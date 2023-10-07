@@ -3,5 +3,6 @@
 public enum UpdatersTypes
 {
     Input,
-    Ship
+    ShipMove,
+    ShipShoot
 }

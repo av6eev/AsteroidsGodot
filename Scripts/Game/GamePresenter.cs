@@ -28,7 +28,6 @@ public partial class GamePresenter : Node
         _gamePresenters.Add(new ShipPresenter(Environment, Environment.ShipModel, GameView.InstantiateShip()));
 
         Environment.UpdatersEngine.Add(UpdatersTypes.Input, new InputUpdater());
-        Environment.FixedUpdatersEngine.Add(UpdatersTypes.Ship, new ShipUpdater());
         
         _gamePresenters.Activate();
     }
@@ -36,11 +35,10 @@ public partial class GamePresenter : Node
     public override void _Process(double delta) => Environment.UpdatersEngine.Update(Environment, delta);
 
     public override void _PhysicsProcess(double delta) => Environment.FixedUpdatersEngine.Update(Environment, delta);
-    
-    public void Deactivate()
+
+    public override void _ExitTree()
     {
         Environment.UpdatersEngine.Remove(UpdatersTypes.Input);
-        Environment.FixedUpdatersEngine.Remove(UpdatersTypes.Ship);
         
         _gamePresenters.Deactivate();
         _gamePresenters.Clear();
